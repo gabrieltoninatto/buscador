@@ -9,7 +9,7 @@ import (
 // chan<- envia informações para o canal
 func FetchPrices(priceChannel chan<- float64) {
 	var wg sync.WaitGroup
-	wg.Add(3)
+	wg.Add(4)
 	go func() {
 		defer wg.Done()
 		priceChannel <- FetchPriceFromSite1()
@@ -26,6 +26,7 @@ func FetchPrices(priceChannel chan<- float64) {
 	}()
 
 	go func() {
+		defer wg.Done()
 		FetchSendMultiplePrices(priceChannel)
 	}()
 
