@@ -25,6 +25,10 @@ func FetchPrices(priceChannel chan<- float64) {
 		priceChannel <- FetchPriceFromSite3()
 	}()
 
+	go func() {
+		FetchSendMultiplePrices(priceChannel)
+	}()
+
 	wg.Wait()
 	close(priceChannel)
 }
@@ -43,4 +47,16 @@ func FetchPriceFromSite2() float64 {
 func FetchPriceFromSite3() float64 {
 	time.Sleep(2 * time.Second)
 	return rand.Float64() * 100
+}
+
+func FetchSendMultiplePrices(priceChannel chan<- float64) {
+	time.Sleep(6 * time.Second)
+	prices := []float64{
+		rand.Float64() * 100,
+		rand.Float64() * 100,
+		rand.Float64() * 100,
+	}
+	for _, price := range prices {
+		priceChannel <- price
+	}
 }
