@@ -2,6 +2,7 @@ package main
 
 import (
 	"buscador/internal/fetcher"
+	"buscador/internal/models"
 	"buscador/internal/processor"
 	"fmt"
 	"time"
@@ -9,8 +10,8 @@ import (
 
 func main() {
 	start := time.Now()
-	priceChannel := make(chan float64)
-	done := make(chan bool) // Canal para sinalizar quando o cálculo da média estiver completo
+	priceChannel := make(chan models.PriceDetail) // Canal para transmitir preços
+	done := make(chan bool)                       // Canal para sinalizar quando o cálculo da média estiver completo
 
 	//WaitGroup (grupo de espera)
 	//Goroutines: funções ou métodos executados de forma concorrente.
