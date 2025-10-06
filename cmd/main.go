@@ -10,8 +10,10 @@ import (
 
 func main() {
 	start := time.Now()
-	priceChannel := make(chan models.PriceDetail) // Canal para transmitir preços
-	done := make(chan bool)                       // Canal para sinalizar quando o cálculo da média estiver completo
+	// buffer
+	priceChannel := make(chan models.PriceDetail, 4) // Canal para transmitir preços
+	//len: tamanho atual do buffer e cap: tamanho máximo do buffer
+	done := make(chan bool) // Canal para sinalizar quando o cálculo da média estiver completo
 
 	//WaitGroup (grupo de espera)
 	//Goroutines: funções ou métodos executados de forma concorrente.
